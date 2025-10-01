@@ -213,26 +213,26 @@ function HuffmanTreeVisualization({ tree }: { tree: HuffmanNode | null }) {
       </div>
 
       {/* Legend */}
-      <div className="mt-4 flex flex-wrap gap-4 justify-center text-sm">
+      <div className="mt-4 grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-4 justify-center text-xs sm:text-sm">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-primary"></div>
-          <span>Character (Leaf)</span>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary flex-shrink-0"></div>
+          <span className="truncate">Character</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full bg-secondary border"></div>
-          <span>Internal Node</span>
+          <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-secondary border flex-shrink-0"></div>
+          <span className="truncate">Internal</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-destructive text-white text-xs flex items-center justify-center font-bold">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-destructive text-white text-xs flex items-center justify-center font-bold flex-shrink-0">
             0
           </div>
-          <span>Left Edge (0)</span>
+          <span className="truncate">Left (0)</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-primary text-white text-xs flex items-center justify-center font-bold">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary text-white text-xs flex items-center justify-center font-bold flex-shrink-0">
             1
           </div>
-          <span>Right Edge (1)</span>
+          <span className="truncate">Right (1)</span>
         </div>
       </div>
     </div>
@@ -282,11 +282,12 @@ export function HuffmanEncoder() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Type or paste your text here..."
-            className="min-h-[120px] font-mono"
+            className="min-h-[100px] sm:min-h-[120px] font-mono text-sm sm:text-base"
           />
-          <div className="mt-2 text-sm text-muted-foreground">
-            Characters: {inputText.length} | Unique:{" "}
-            {result?.frequencies.length || 0}
+          <div className="mt-2 text-xs sm:text-sm text-muted-foreground flex flex-wrap gap-2">
+            <span>Characters: {inputText.length}</span>
+            <span>•</span>
+            <span>Unique: {result?.frequencies.length || 0}</span>
           </div>
         </CardContent>
       </Card>
@@ -294,11 +295,14 @@ export function HuffmanEncoder() {
       {result && (
         <>
           {/* Compression Statistics */}
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Rest remains the same */}
             <Card>
-              <CardHeader className="pb-3">
-                <CardDescription>Original Size</CardDescription>
-                <CardTitle className="text-2xl">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardDescription className="text-xs sm:text-sm">
+                  Original Size
+                </CardDescription>
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl">
                   {result.originalBits} bits
                 </CardTitle>
               </CardHeader>
@@ -310,9 +314,11 @@ export function HuffmanEncoder() {
             </Card>
 
             <Card>
-              <CardHeader className="pb-3">
-                <CardDescription>Encoded Size</CardDescription>
-                <CardTitle className="text-2xl">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardDescription className="text-xs sm:text-sm">
+                  Encoded Size
+                </CardDescription>
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl">
                   {result.encodedBits} bits
                 </CardTitle>
               </CardHeader>
@@ -324,9 +330,11 @@ export function HuffmanEncoder() {
             </Card>
 
             <Card>
-              <CardHeader className="pb-3">
-                <CardDescription>Compression Ratio</CardDescription>
-                <CardTitle className="text-2xl">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardDescription className="text-xs sm:text-sm">
+                  Compression Ratio
+                </CardDescription>
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl">
                   {result.compressionRatio.toFixed(2)}:1
                 </CardTitle>
               </CardHeader>
@@ -338,9 +346,11 @@ export function HuffmanEncoder() {
             </Card>
 
             <Card>
-              <CardHeader className="pb-3">
-                <CardDescription>Space Savings</CardDescription>
-                <CardTitle className="text-2xl">
+              <CardHeader className="pb-2 sm:pb-3">
+                <CardDescription className="text-xs sm:text-sm">
+                  Space Savings
+                </CardDescription>
+                <CardTitle className="text-lg sm:text-xl lg:text-2xl">
                   {result.spaceSavings.toFixed(1)}%
                 </CardTitle>
               </CardHeader>
@@ -354,11 +364,35 @@ export function HuffmanEncoder() {
 
           {/* Main Content Tabs */}
           <Tabs defaultValue="encoded" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="encoded">Encoded Output</TabsTrigger>
-              <TabsTrigger value="tree">Huffman Tree</TabsTrigger>
-              <TabsTrigger value="codes">Huffman Codes</TabsTrigger>
-              <TabsTrigger value="frequencies">Frequency Table</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+              <TabsTrigger
+                value="encoded"
+                className="text-xs sm:text-sm px-2 sm:px-3"
+              >
+                <span className="hidden sm:inline">Encoded Output</span>
+                <span className="sm:hidden">Encoded</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="tree"
+                className="text-xs sm:text-sm px-2 sm:px-3"
+              >
+                <span className="hidden sm:inline">Huffman Tree</span>
+                <span className="sm:hidden">Tree</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="codes"
+                className="text-xs sm:text-sm px-2 sm:px-3"
+              >
+                <span className="hidden sm:inline">Huffman Codes</span>
+                <span className="sm:hidden">Codes</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="frequencies"
+                className="text-xs sm:text-sm px-2 sm:px-3"
+              >
+                <span className="hidden sm:inline">Frequency Table</span>
+                <span className="sm:hidden">Frequency</span>
+              </TabsTrigger>
             </TabsList>
 
             {/* Encoded Output Tab */}
@@ -371,16 +405,16 @@ export function HuffmanEncoder() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="rounded-lg bg-muted p-4 font-mono text-sm break-all">
+                  <div className="rounded-lg bg-muted p-3 sm:p-4 font-mono text-xs sm:text-sm break-all max-h-32 sm:max-h-40 overflow-y-auto">
                     {result.encoded}
                   </div>
-                  <div className="mt-4 flex items-center gap-2">
+                  <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row sm:items-center gap-2">
                     <Badge
                       variant={isDecodingCorrect ? "default" : "destructive"}
                     >
                       {isDecodingCorrect ? "✓ Lossless" : "✗ Error"}
                     </Badge>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-xs sm:text-sm text-muted-foreground">
                       Decoding verification:{" "}
                       {isDecodingCorrect ? "Passed" : "Failed"}
                     </span>
@@ -405,7 +439,7 @@ export function HuffmanEncoder() {
                 </CardHeader>
                 <CardContent>
                   <HuffmanTreeVisualization tree={result.tree} />
-                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div className="mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
                     <div className="space-y-2">
                       <h4 className="font-semibold text-foreground">
                         How to Read the Tree:
@@ -455,40 +489,50 @@ export function HuffmanEncoder() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Character</TableHead>
-                        <TableHead>Huffman Code</TableHead>
-                        <TableHead className="text-right">Frequency</TableHead>
-                        <TableHead className="text-right">
-                          Code Length
-                        </TableHead>
-                        <TableHead className="text-right">Total Bits</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {result.codes.map((item) => (
-                        <TableRow key={item.char}>
-                          <TableCell className="font-mono font-semibold">
-                            {item.char === " " ? "␣" : item.char}
-                          </TableCell>
-                          <TableCell className="font-mono text-primary">
-                            {item.code}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.frequency}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.bits}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.frequency * item.bits}
-                          </TableCell>
+                  <div className="w-full overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="min-w-[80px]">
+                            Character
+                          </TableHead>
+                          <TableHead className="min-w-[100px]">
+                            Huffman Code
+                          </TableHead>
+                          <TableHead className="text-right min-w-[80px]">
+                            Frequency
+                          </TableHead>
+                          <TableHead className="text-right min-w-[90px]">
+                            Code Length
+                          </TableHead>
+                          <TableHead className="text-right min-w-[80px]">
+                            Total Bits
+                          </TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {result.codes.map((item) => (
+                          <TableRow key={item.char}>
+                            <TableCell className="font-mono font-semibold">
+                              {item.char === " " ? "␣" : item.char}
+                            </TableCell>
+                            <TableCell className="font-mono text-primary">
+                              {item.code}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {item.frequency}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {item.bits}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {item.frequency * item.bits}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -506,41 +550,51 @@ export function HuffmanEncoder() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Character</TableHead>
-                        <TableHead className="text-right">Count</TableHead>
-                        <TableHead className="text-right">Percentage</TableHead>
-                        <TableHead>Distribution</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {result.frequencies.map((item) => (
-                        <TableRow key={item.char}>
-                          <TableCell className="font-mono font-semibold">
-                            {item.char === " " ? "␣" : item.char}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.frequency}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.percentage.toFixed(1)}%
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <div className="h-2 flex-1 bg-muted rounded-full overflow-hidden">
-                                <div
-                                  className="h-full bg-primary"
-                                  style={{ width: `${item.percentage}%` }}
-                                />
-                              </div>
-                            </div>
-                          </TableCell>
+                  <div className="w-full overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="min-w-[80px]">
+                            Character
+                          </TableHead>
+                          <TableHead className="text-right min-w-[70px]">
+                            Count
+                          </TableHead>
+                          <TableHead className="text-right min-w-[90px]">
+                            Percentage
+                          </TableHead>
+                          <TableHead className="min-w-[150px]">
+                            Distribution
+                          </TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {result.frequencies.map((item) => (
+                          <TableRow key={item.char}>
+                            <TableCell className="font-mono font-semibold">
+                              {item.char === " " ? "␣" : item.char}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {item.frequency}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {item.percentage.toFixed(1)}%
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-2">
+                                <div className="h-2 flex-1 bg-muted rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-primary"
+                                    style={{ width: `${item.percentage}%` }}
+                                  />
+                                </div>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
