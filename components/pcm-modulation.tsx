@@ -91,120 +91,123 @@ function SignalPlot({
   return (
     <div className="space-y-2">
       <h4 className="font-semibold text-sm">{title}</h4>
-      <svg
-        width={width}
-        height={height}
-        className="border rounded bg-white dark:bg-gray-900"
-      >
-        {/* Grid */}
-        <defs>
-          <pattern
-            id={`grid-${title.replace(/\s+/g, "")}`}
-            width="40"
-            height="20"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 40 0 L 0 0 0 20"
-              fill="none"
-              stroke="#e5e7eb"
-              strokeWidth="0.5"
-            />
-          </pattern>
-        </defs>
-        <rect
+      <div className="chart-container">
+        <svg
           width="100%"
-          height="100%"
-          fill={`url(#grid-${title.replace(/\s+/g, "")})`}
-        />
-
-        {/* Axes */}
-        <line
-          x1={padding}
-          y1={padding}
-          x2={padding}
-          y2={height - padding}
-          stroke="#6b7280"
-          strokeWidth="1"
-        />
-        <line
-          x1={padding}
-          y1={height - padding}
-          x2={width - padding}
-          y2={height - padding}
-          stroke="#6b7280"
-          strokeWidth="1"
-        />
-
-        {/* Y-axis labels */}
-        <text x={padding - 30} y={padding + 5} fontSize="10" fill="#6b7280">
-          {maxValue.toFixed(1)}
-        </text>
-        <text
-          x={padding - 30}
-          y={height - padding + 5}
-          fontSize="10"
-          fill="#6b7280"
+          height={height}
+          viewBox={`0 0 ${width} ${height}`}
+          className="border rounded bg-white dark:bg-gray-900"
         >
-          {minValue.toFixed(1)}
-        </text>
-
-        {/* Plot signals */}
-        {validSignals.map((signal, sigIndex) => {
-          if (!signal.data || signal.data.length === 0) return null;
-
-          const actualColor = getActualColor(signal.color);
-          const pathData = signal.data
-            .map((value, index) => {
-              const x = getX(index, signal.data.length);
-              const y = getY(value);
-              return `${index === 0 ? "M" : "L"} ${x} ${y}`;
-            })
-            .join(" ");
-
-          return (
-            <g key={sigIndex}>
+          {/* Grid */}
+          <defs>
+            <pattern
+              id={`grid-${title.replace(/\s+/g, "")}`}
+              width="40"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
               <path
-                d={pathData}
+                d="M 40 0 L 0 0 0 20"
                 fill="none"
-                stroke={actualColor}
-                strokeWidth="2"
-                opacity="0.9"
+                stroke="#e5e7eb"
+                strokeWidth="0.5"
               />
-              {/* Sample points for small datasets */}
-              {signal.data.length < 50 &&
-                signal.data.map((value, index) => (
-                  <circle
-                    key={index}
-                    cx={getX(index, signal.data.length)}
-                    cy={getY(value)}
-                    r="3"
-                    fill={actualColor}
-                  />
-                ))}
-            </g>
-          );
-        })}
+            </pattern>
+          </defs>
+          <rect
+            width="100%"
+            height="100%"
+            fill={`url(#grid-${title.replace(/\s+/g, "")})`}
+          />
 
-        {/* Legend */}
-        <g transform={`translate(${width - 150}, 20)`}>
-          {validSignals.map((signal, index) => (
-            <g key={index} transform={`translate(0, ${index * 18})`}>
-              <line
-                x1={0}
-                y1={0}
-                x2={20}
-                y2={0}
-                stroke={getActualColor(signal.color)}
-                strokeWidth="3"
-              />
-              <text x={25} y={4} fontSize="12" fill="#374151">
-                {signal.label}
-              </text>
-            </g>
-          ))}
-        </g>
-      </svg>
+          {/* Axes */}
+          <line
+            x1={padding}
+            y1={padding}
+            x2={padding}
+            y2={height - padding}
+            stroke="#6b7280"
+            strokeWidth="1"
+          />
+          <line
+            x1={padding}
+            y1={height - padding}
+            x2={width - padding}
+            y2={height - padding}
+            stroke="#6b7280"
+            strokeWidth="1"
+          />
+
+          {/* Y-axis labels */}
+          <text x={padding - 30} y={padding + 5} fontSize="10" fill="#6b7280">
+            {maxValue.toFixed(1)}
+          </text>
+          <text
+            x={padding - 30}
+            y={height - padding + 5}
+            fontSize="10"
+            fill="#6b7280"
+          >
+            {minValue.toFixed(1)}
+          </text>
+
+          {/* Plot signals */}
+          {validSignals.map((signal, sigIndex) => {
+            if (!signal.data || signal.data.length === 0) return null;
+
+            const actualColor = getActualColor(signal.color);
+            const pathData = signal.data
+              .map((value, index) => {
+                const x = getX(index, signal.data.length);
+                const y = getY(value);
+                return `${index === 0 ? "M" : "L"} ${x} ${y}`;
+              })
+              .join(" ");
+
+            return (
+              <g key={sigIndex}>
+                <path
+                  d={pathData}
+                  fill="none"
+                  stroke={actualColor}
+                  strokeWidth="2"
+                  opacity="0.9"
+                />
+                {/* Sample points for small datasets */}
+                {signal.data.length < 50 &&
+                  signal.data.map((value, index) => (
+                    <circle
+                      key={index}
+                      cx={getX(index, signal.data.length)}
+                      cy={getY(value)}
+                      r="3"
+                      fill={actualColor}
+                    />
+                  ))}
+              </g>
+            );
+          })}
+
+          {/* Legend */}
+          <g transform={`translate(${width - 150}, 20)`}>
+            {validSignals.map((signal, index) => (
+              <g key={index} transform={`translate(0, ${index * 18})`}>
+                <line
+                  x1={0}
+                  y1={0}
+                  x2={20}
+                  y2={0}
+                  stroke={getActualColor(signal.color)}
+                  strokeWidth="3"
+                />
+                <text x={25} y={4} fontSize="12" fill="#374151">
+                  {signal.label}
+                </text>
+              </g>
+            ))}
+          </g>
+        </svg>
+      </div>
     </div>
   );
 }
@@ -531,8 +534,8 @@ export function PulseCodeModulation() {
                 },
               ].filter((signal) => signal.data && signal.data.length > 0)}
               title="Signal Comparison"
-              width={500}
-              height={200}
+              width={400}
+              height={180}
             />
           </CardContent>
         </Card>
@@ -554,8 +557,8 @@ export function PulseCodeModulation() {
                 },
               ].filter((signal) => signal.data && signal.data.length > 0)}
               title="Quantization Error"
-              width={500}
-              height={200}
+              width={400}
+              height={180}
             />
           </CardContent>
         </Card>

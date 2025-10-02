@@ -123,3 +123,151 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Responsive Utilities for Digital Communication System Simulator */
+@layer utilities {
+  /* Responsive Grid Layout */
+  .responsive-grid {
+    @apply grid gap-4 grid-cols-1;
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-grid {
+      @apply grid-cols-2;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-grid {
+      @apply grid-cols-3;
+    }
+  }
+  
+  /* Responsive Card Styles */
+  .responsive-card {
+    @apply bg-white rounded-lg p-4 mb-4 shadow-sm border;
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-card {
+      @apply p-6;
+    }
+  }
+  
+  /* Chart Container Responsive */
+  .chart-container {
+    @apply w-full h-64 overflow-x-auto overflow-y-hidden;
+  }
+  
+  @media (max-width: 640px) {
+    .chart-container {
+      @apply h-48;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .chart-container {
+      @apply h-80;
+    }
+  }
+  
+  /* Form Container Responsive */
+  .form-container {
+    @apply flex flex-col gap-4;
+  }
+  
+  @media (min-width: 640px) {
+    .form-container {
+      @apply flex-row items-center;
+    }
+  }
+  
+  /* Responsive Text Sizes */
+  .text-responsive {
+    @apply text-sm;
+  }
+  
+  @media (min-width: 768px) {
+    .text-responsive {
+      @apply text-base;
+    }
+  }
+  
+  .heading-responsive {
+    @apply text-lg font-semibold;
+  }
+  
+  @media (min-width: 768px) {
+    .heading-responsive {
+      @apply text-xl;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .heading-responsive {
+      @apply text-2xl;
+    }
+  }
+  
+  /* Full width on mobile, responsive on larger screens */
+  .responsive-full {
+    @apply col-span-full;
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-full {
+      @apply col-span-2;
+    }
+  }
+  
+  /* Hide elements on mobile */
+  @media (max-width: 640px) {
+    .hide-mobile {
+      @apply hidden;
+    }
+  }
+  
+  /* Show only on mobile */
+  @media (min-width: 641px) {
+    .show-mobile-only {
+      @apply hidden;
+    }
+  }
+  
+  /* Responsive Input and Textarea */
+  .input-responsive {
+    @apply w-full p-3 border rounded-md text-sm;
+  }
+  
+  @media (min-width: 768px) {
+    .input-responsive {
+      @apply text-base;
+    }
+  }
+  
+  /* Responsive Button */
+  .button-responsive {
+    @apply px-4 py-2 text-sm font-medium rounded-md;
+  }
+  
+  @media (min-width: 768px) {
+    .button-responsive {
+      @apply px-6 py-3 text-base;
+    }
+  }
+  
+  /* Responsive Table */
+  .table-responsive {
+    @apply w-full overflow-x-auto;
+  }
+  
+  .table-responsive table {
+    @apply min-w-full text-sm;
+  }
+  
+  @media (min-width: 768px) {
+    .table-responsive table {
+      @apply text-base;
+    }
+  }
+}

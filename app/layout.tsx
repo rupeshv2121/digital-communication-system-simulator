@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Digital Communication System App",
   description: "Created by Rupesh Varshney",
   generator: "v0.app",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
@@ -17,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body
+        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} min-h-screen bg-gray-50`}
+      >
         {children}
         <Analytics />
       </body>

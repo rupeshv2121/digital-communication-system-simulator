@@ -303,14 +303,20 @@ export function SourceCodingProperties() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="input" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="input">Input Codewords</TabsTrigger>
-              <TabsTrigger value="analysis">Property Analysis</TabsTrigger>
-              <TabsTrigger value="metrics">Code Metrics</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 h-auto gap-1 sm:gap-0">
+              <TabsTrigger value="input" className="text-xs sm:text-sm py-2">
+                Input Codewords
+              </TabsTrigger>
+              <TabsTrigger value="analysis" className="text-xs sm:text-sm py-2">
+                Property Analysis
+              </TabsTrigger>
+              <TabsTrigger value="metrics" className="text-xs sm:text-sm py-2">
+                Code Metrics
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="input" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium">
                     Enter Codewords (Symbol: Code)
@@ -319,7 +325,7 @@ export function SourceCodingProperties() {
                     value={customInput || codewordInput}
                     onChange={(e) => setCustomInput(e.target.value)}
                     placeholder="A: 0&#10;B: 10&#10;C: 110&#10;D: 111"
-                    className="font-mono text-sm"
+                    className="font-mono text-sm min-h-[120px] sm:min-h-[150px]"
                     rows={6}
                   />
                   <div className="text-xs text-muted-foreground">
@@ -336,10 +342,10 @@ export function SourceCodingProperties() {
                       onClick={() => {
                         setCustomInput(exampleSets.valid);
                       }}
-                      className="w-full justify-start text-xs"
+                      className="w-full justify-start text-xs sm:text-sm h-auto py-2 px-3"
                     >
-                      <CheckCircle2 className="h-3 w-3 mr-2 text-green-500" />
-                      Valid Prefix Code
+                      <CheckCircle2 className="h-3 w-3 mr-2 text-green-500 flex-shrink-0" />
+                      <span className="text-left">Valid Prefix Code</span>
                     </Button>
                     <Button
                       variant="outline"
@@ -347,10 +353,12 @@ export function SourceCodingProperties() {
                       onClick={() => {
                         setCustomInput(exampleSets.invalid);
                       }}
-                      className="w-full justify-start text-xs"
+                      className="w-full justify-start text-xs sm:text-sm h-auto py-2 px-3"
                     >
-                      <XCircle className="h-3 w-3 mr-2 text-red-500" />
-                      Invalid (Prefix Violation)
+                      <XCircle className="h-3 w-3 mr-2 text-red-500 flex-shrink-0" />
+                      <span className="text-left">
+                        Invalid (Prefix Violation)
+                      </span>
                     </Button>
                     <Button
                       variant="outline"
@@ -358,23 +366,33 @@ export function SourceCodingProperties() {
                       onClick={() => {
                         setCustomInput(exampleSets.huffman);
                       }}
-                      className="w-full justify-start text-xs"
+                      className="w-full justify-start text-xs sm:text-sm h-auto py-2 px-3"
                     >
-                      <Code2 className="h-3 w-3 mr-2 text-blue-500" />
-                      Huffman Code Example
+                      <Code2 className="h-3 w-3 mr-2 text-blue-500 flex-shrink-0" />
+                      <span className="text-left">Huffman Code Example</span>
                     </Button>
                   </div>
 
-                  <div className="mt-4 p-3 bg-muted rounded-lg">
+                  <div className="mt-4 p-3 sm:p-4 bg-muted rounded-lg">
                     <h4 className="text-sm font-semibold mb-2">
                       Current Codebook:
                     </h4>
-                    <div className="space-y-1">
-                      {codewordSet.map((cs, i) => (
-                        <div key={i} className="text-xs font-mono">
-                          {cs.symbol} → {cs.codeword}
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {codewordSet.length === 0 ? (
+                        <div className="text-xs text-muted-foreground italic">
+                          No valid codewords entered
                         </div>
-                      ))}
+                      ) : (
+                        codewordSet.map((cs, i) => (
+                          <div
+                            key={i}
+                            className="text-xs sm:text-sm font-mono bg-background px-2 py-1 rounded"
+                          >
+                            <span className="font-semibold">{cs.symbol}</span> →{" "}
+                            <span className="text-blue-600">{cs.codeword}</span>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>
@@ -458,17 +476,20 @@ export function SourceCodingProperties() {
             </TabsContent>
 
             <TabsContent value="metrics" className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                 <Card>
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-2 px-3 sm:px-6">
                     <CardDescription className="text-xs">
                       Average Length
                     </CardDescription>
-                    <CardTitle className="text-xl">
-                      {metrics.averageLength.toFixed(2)} bits
+                    <CardTitle className="text-lg sm:text-xl">
+                      {metrics.averageLength.toFixed(2)}{" "}
+                      <span className="text-sm font-normal text-muted-foreground">
+                        bits
+                      </span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-3 sm:px-6">
                     <div className="text-xs text-muted-foreground">
                       Expected bits per symbol
                     </div>
@@ -476,15 +497,18 @@ export function SourceCodingProperties() {
                 </Card>
 
                 <Card>
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-2 px-3 sm:px-6">
                     <CardDescription className="text-xs">
                       Entropy
                     </CardDescription>
-                    <CardTitle className="text-xl">
-                      {metrics.entropy.toFixed(2)} bits
+                    <CardTitle className="text-lg sm:text-xl">
+                      {metrics.entropy.toFixed(2)}{" "}
+                      <span className="text-sm font-normal text-muted-foreground">
+                        bits
+                      </span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-3 sm:px-6">
                     <div className="text-xs text-muted-foreground">
                       Theoretical minimum
                     </div>
@@ -492,15 +516,18 @@ export function SourceCodingProperties() {
                 </Card>
 
                 <Card>
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-2 px-3 sm:px-6">
                     <CardDescription className="text-xs">
                       Efficiency
                     </CardDescription>
-                    <CardTitle className="text-xl">
-                      {(metrics.efficiency * 100).toFixed(1)}%
+                    <CardTitle className="text-lg sm:text-xl">
+                      {(metrics.efficiency * 100).toFixed(1)}
+                      <span className="text-sm font-normal text-muted-foreground">
+                        %
+                      </span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-3 sm:px-6">
                     <div className="text-xs text-muted-foreground">
                       Entropy / Avg Length
                     </div>
@@ -508,15 +535,18 @@ export function SourceCodingProperties() {
                 </Card>
 
                 <Card>
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-2 px-3 sm:px-6">
                     <CardDescription className="text-xs">
                       Redundancy
                     </CardDescription>
-                    <CardTitle className="text-xl">
-                      {metrics.redundancy.toFixed(2)} bits
+                    <CardTitle className="text-lg sm:text-xl">
+                      {metrics.redundancy.toFixed(2)}{" "}
+                      <span className="text-sm font-normal text-muted-foreground">
+                        bits
+                      </span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-3 sm:px-6">
                     <div className="text-xs text-muted-foreground">
                       Excess over entropy
                     </div>
