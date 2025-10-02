@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Source Coding",
+  title: "Digital Communication System App",
   description: "Created by Rupesh Varshney",
   generator: "v0.app",
 };
